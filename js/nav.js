@@ -11,7 +11,7 @@ define(["jquery"], function ($) {
                 var bannerArr = result.banner;
 
                 // 通过循环将数据添加到页面上
-                for (var i = 0, len = bannerArr.length; i < len; i++){
+                for (var i = 0, len = bannerArr.length; i < len; i++) {
                     $(`<a href="${bannerArr[i].url}">
                     <img src="./images/banner/${bannerArr[i].img}" alt="" class="swiper-lazy swiper-lazy-loaded">
                 </a>`).appendTo("#J_homeSwiper .swiper-slide");
@@ -26,7 +26,8 @@ define(["jquery"], function ($) {
             error: function (msg) {
                 console.log(msg);
             }
-        })
+        });
+        leftNavDownload();
     }
 
     // 实现轮播图效果
@@ -90,7 +91,62 @@ define(["jquery"], function ($) {
                 tab();
             }
         })
+    }
 
+
+    // 侧边导航栏数据的加载
+    function leftNavDownload() {
+        $.ajax({
+            url: "../data/nav.json",
+            success: function (result) {
+                var sideArr = result.sideNav;
+                // console.log(sideArr);
+                for (var i = 0, len = sideArr.length; i < len; i++){
+                    var node = $(`<li class = 'category-item'>
+                    <a href="javascript:;" class = 'title'>
+                        ${sideArr[i].title}
+                        <em class = 'iconfont-arrow-right-big'></em>
+                    </a>
+                    <div class="children clearfix"></div>
+                </li>`);
+                    node.appendTo("#J_categoryList");
+
+                    // 取出当前这个选项对应的子节点
+                    var childArr = sideArr[i].child;
+                    // 一共有多少列
+                    var col = Math.ceil(childArr.length / 6);
+                    // 计算一共多少列 设置对应的class样式
+                    node.find("div.children").addClass("children-col-" + col);
+                    // 通过循环，创建右侧的数据
+                    for (var j = 0, l = childArr.length; j < l; j++){
+                        if (j % 6 == 0) {
+                            var newUl = $(`<ul class="children-list children-list-col children-list-col-"${parseInt(j / 6)}></ul>`);
+                            newUl.appendTo(node.find("div.children"));
+                        }
+                        $(`<li>
+                        <a href="http://www.mi.com/redminote8pro" data-log_code="31pchomeother001000#t=normal&amp;act=other&amp;page=home&amp;page_id=10530&amp;bid=3476792.2" class="link clearfix" data-stat-id="d678e8386e9cb0fb" onclick="_msq.push(['trackEvent', '81190ccc4d52f577-d678e8386e9cb0fb', 'http://www.mi.com/redminote8pro', 'pcpid', '31pchomeother001000#t=normal&amp;act=other&amp;page=home&amp;page_id=10530&amp;bid=3476792.2']);">
+                            <img src="${childArr[j].img}" width="40" height="40" alt="" class="thumb">
+                            <span class="text">${childArr[j].title}</span>
+                        </a>
+                    </li>`).appendTo(newUl);
+                    }
+                }
+            },
+            error: function () {
+                console.log(msg);
+            }
+        })
+    }
+
+
+    // 给侧边导航栏添加切换效果
+    function leftNavTab() {
+        $("#J_categoryList").on("mouseenter", ".category-item", function () {
+            $(this).addClass("category-item-active")
+        });
+        $("#J_categoryList").on("mouseleave", ".category-item", function () {
+            $(this).removeClass("category-item-active")
+        });
     }
 
 
@@ -102,6 +158,7 @@ define(["jquery"], function ($) {
     return  {
         download: download,
         banner: banner,
+        leftNavTab: leftNavTab,
         
     }
 })
