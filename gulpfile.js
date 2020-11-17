@@ -69,11 +69,11 @@ const connect = require("gulp-connect");
 
 gulp.task("server", function () {
     connect.server({
-        root: "./dist",
+        root: "./",
         port: 8887,
         livereload:true
     })
 })
 
 // 启动默认任务
-gulp.task("default", ["watch", "server"]);
+gulp.task("default", ["server"]);

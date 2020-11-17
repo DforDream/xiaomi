@@ -79,17 +79,16 @@ define(["jquery"], function ($) {
 
 
         // 点击左右按钮
-        $(".swiper-button-prev,swiper-button-next").click(function () {
+        $(".swiper-button-prev,.swiper-button-next").click(function () {
             if (this.className === "swiper-button-prev") {
                 ind--;
                 if (ind < 0) {
                     ind = 4;
                 }
-                tab();
             } else {
                 ind++;
-                tab();
             }
+            tab();
         })
     }
 
