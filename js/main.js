@@ -10,7 +10,7 @@ require.config({
         "jquery": "jquery-1.11.3",
         "jquery-cookie": "jquery.cookie.js",
         "nav": "nav",
-        
+        "slide": "slide"
     },
     shim: {
         // 设置依赖关系
@@ -19,10 +19,16 @@ require.config({
     }
 })
 
-require(["nav"], function (nav) {
+require(["nav", "slide"], function (nav, slide) {
+    // 头部导航栏部分
     nav.download();
     nav.banner();
     nav.leftNavTab();
     nav.topNavTab();
     nav.searchTab();
+
+    // 倒计时及左侧效果实现
+    slide.download();
+    slide.slideTab();
+    slide.countDown();
 })
