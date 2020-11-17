@@ -28,6 +28,7 @@ define(["jquery"], function ($) {
             }
         });
         leftNavDownload();
+        topNavDownload();
     }
 
     // 实现轮播图效果
@@ -149,6 +150,80 @@ define(["jquery"], function ($) {
     }
 
 
+    // 下载顶部导航的数据
+    function topNavDownload() {
+        $.ajax({
+            url: "../data/nav.json",
+            success: function (result) {
+                var topNavArr = result.topNav;
+                topNavArr.push({ title: "服务" }, { title: "社区" });
+                for (var i = 0, len = topNavArr.length; i < len; i++){
+                    $(`<li data-index="${i}" class="nav-item">
+                    <a href="javascript:;" class="link">
+                        <span class="text">${topNavArr[i].title}</span>
+                    </a>
+                </li>`).appendTo(".site-header .header-nav .nav-list");
+                    
+                    var node = $(`<ul class="children-list clearfix" style="display:${i == 0 ? "block" : "none"}"></ul>`);
+                    node.appendTo("#J_navMenu .container");
+                    
+                    // 取出所有的子节点
+                    if (topNavArr[i].childs) {
+                        var childArr = topNavArr[i].childs;
+                        for (var j = 0, lenj = childArr.length; j < lenj; j++){
+                            $(`<li>
+                            <a href="#">
+                                <div class="figure figure-thumb">
+                                    <img src="${childArr[j].img}" alt="">
+                                </div>
+                                <div class="title">${childArr[j].a}</div>
+                                <p class="price">${childArr[j].i}</p>
+                            </a>
+                        </li>`).appendTo(node);
+                        }
+                    }
+                }
+            },
+            error: function (msg) {
+                console.log(msg)
+            }
+        })
+    }
+
+    // 顶部导航添加移入效果
+    function topNavTab() {
+        $(".header-nav .nav-list").on("mouseenter", ".nav-item", function () {
+            $(this).addClass("nav-item-active");
+            // 找出当前移入这个a标签的下标
+            var index = $(this).index() - 1;
+            if (index >= 0 && index <= 6) {
+                $("#J_navMenu").show().removeClass("slide-up").addClass("slide-down");
+                $("#J_navMenu .container").find("ul").eq(index).show().siblings("ul").hide();
+            } else {
+                $("#J_navMenu").removeClass("slide-down").addClass("slide-up");
+            }
+        });
+
+        $(".header-nav .nav-list").on("mouseleave", ".nav-item", function () {
+            $(this).removeClass("nav-item-active");
+        })
+
+        $(".site-header").mouseleave(function () {
+            $("#J_navMenu").removeClass("slide-down").addClass("slide-up");
+        })
+
+    }
+
+    // 搜索框
+    function searchTab() {
+        $("#search").focus(function () {
+            $("#J_keywordList").removeClass("hide").addClass("show");
+        }).blur(function () {
+            $("#J_keywordList").removeClass("show").addClass("hide");
+        })
+    }
+
+
     
 
 
@@ -158,6 +233,7 @@ define(["jquery"], function ($) {
         download: download,
         banner: banner,
         leftNavTab: leftNavTab,
-        
+        topNavTab: topNavTab,
+        searchTab: searchTab
     }
 })
