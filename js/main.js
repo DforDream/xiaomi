@@ -10,7 +10,8 @@ require.config({
         "jquery": "jquery-1.11.3",
         "jquery-cookie": "jquery.cookie.js",
         "nav": "nav",
-        "slide": "slide"
+        "slide": "slide",
+        "data": "data"
     },
     shim: {
         // 设置依赖关系
@@ -19,7 +20,7 @@ require.config({
     }
 })
 
-require(["nav", "slide"], function (nav, slide) {
+require(["nav", "slide","data"], function (nav, slide,data) {
     // 头部导航栏部分
     nav.download();
     nav.banner();
@@ -31,4 +32,8 @@ require(["nav", "slide"], function (nav, slide) {
     slide.download();
     slide.slideTab();
     slide.countDown();
+
+    // 首页商品加载
+    data.download();
+    data.tabMenu();
 })

@@ -208,7 +208,7 @@ define(["jquery"], function ($) {
             $(this).removeClass("nav-item-active");
         })
 
-        $(".site-header").mouseleave(function () {
+        $(".header-nav").mouseleave(function () {
             $("#J_navMenu").removeClass("slide-down").addClass("slide-up");
         })
 
