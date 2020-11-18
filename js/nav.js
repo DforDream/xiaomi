@@ -109,7 +109,7 @@ define(["jquery"], function ($) {
                     </a>
                     <div class="children clearfix"></div>
                 </li>`);
-                    node.appendTo("#J_categoryList");
+                    node.appendTo("#J_navCategory #J_categoryList");
 
                     // 取出当前这个选项对应的子节点
                     var childArr = sideArr[i].child;
@@ -224,6 +224,19 @@ define(["jquery"], function ($) {
     }
 
 
+    // 商品列表也所有商品移入移出效果
+    function allGoodsTab(){
+        $(".header-nav .nav-list").on("mouseenter", ".nav-category", function(){
+            $(this).addClass("nav-category-active");
+            $(this).find(".site-category").css("display", 'block');
+        })
+        
+        $(".header-nav .nav-list").on("mouseleave", ".nav-category", function(){
+            $(this).removeClass("nav-category-active");
+            $(this).find(".site-category").css("display", 'none');
+        })
+    }
+
     
 
 
@@ -234,6 +247,9 @@ define(["jquery"], function ($) {
         banner: banner,
         leftNavTab: leftNavTab,
         topNavTab: topNavTab,
-        searchTab: searchTab
+        searchTab: searchTab,
+        leftNavDownload: leftNavDownload,
+        topNavDownload: topNavDownload,
+        allGoodsTab: allGoodsTab
     }
 })
