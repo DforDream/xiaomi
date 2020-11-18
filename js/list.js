@@ -3,13 +3,14 @@ require.config({
         "jquery": "jquery-1.11.3",
         "jquery-cookie": "jquery.cookie",
         "nav": "nav",
+        "goodsList": "goodsList"
     },
     shim: {
         "jquery-cookie": ["jquery"],
     }
 })
 
-require(["nav"], function (nav) {
+require(["nav","goodsList"], function (nav,goodsList) {
     nav.topNavDownload();
     nav.leftNavDownload();
     nav.leftNavTab();
@@ -18,4 +19,6 @@ require(["nav"], function (nav) {
     nav.allGoodsTab();
 
 
+    goodsList.download();
+    goodsList.banner();
 })
