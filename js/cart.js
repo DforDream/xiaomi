@@ -12,4 +12,7 @@ require.config({
 require(["goodsCart"], function (goodsCart) {
     goodsCart.loadCartData();
     goodsCart.download();
+    goodsCart.checkFunc();
+    goodsCart.cartHover();
+    goodsCart.changeCars();
 })
